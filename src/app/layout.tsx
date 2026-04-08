@@ -46,10 +46,23 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
       </head>
-      <body className="antialiased pb-[var(--tab-bar-height)]">
-        <ClientProviders>
-          {children}
-        </ClientProviders>
+      <body className="antialiased bg-slate-100 dark:bg-slate-950 flex justify-center no-scrollbar overflow-hidden h-screen">
+        <div className="w-full max-w-[430px] h-screen bg-background relative shadow-[0_0_100px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden m-auto lg:rounded-[3rem] lg:border-8 lg:border-slate-800">
+          {/* Mock Status Bar for App Feel */}
+          <div className="h-10 w-full flex justify-between items-center px-8 flex-shrink-0 text-on-surface/80">
+            <span className="text-xs font-bold">9:41</span>
+            <div className="flex gap-1.5 items-center">
+              <div className="w-4 h-2.5 bg-on-surface/80 rounded-sm"></div>
+              <div className="w-4 h-4 bg-on-surface/80 rounded-full"></div>
+            </div>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto no-scrollbar pb-[var(--tab-bar-height)]">
+            <ClientProviders>
+              {children}
+            </ClientProviders>
+          </div>
+        </div>
       </body>
     </html>
   );
