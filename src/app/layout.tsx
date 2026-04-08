@@ -46,7 +46,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
       </head>
-      <body className="antialiased pb-32 md:pb-0">
+      <body className="antialiased pb-[var(--tab-bar-height)]">
         <ClientProviders>
           {children}
         </ClientProviders>

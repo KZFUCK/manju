@@ -20,67 +20,41 @@ const NavBar: React.FC<NavBarProps> = ({ activeTab = 'home' }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/60 dark:bg-slate-950/60 backdrop-blur-xl shadow-sm dark:shadow-none px-6 py-4 w-full flex justify-between items-center transition-all duration-300">
-      <div className="flex items-center gap-6">
-        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-violet-600 to-indigo-500 font-headline group-hover:scale-105 transition-transform">
-            MangaAI
-          </span>
+    <header className="sticky top-0 z-50 h-[var(--header-height)] bg-white/80 dark:bg-slate-950/80 backdrop-blur-2xl border-b border-slate-100 dark:border-white/5 flex items-center justify-between px-5 w-full">
+      {/* Left: App Logo / Brand */}
+      <div className="flex-1 flex items-center">
+        <Link href="/" className="flex items-center gap-1.5 active:scale-95 transition-transform">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-black text-xs shadow-lg shadow-primary/20">
+            M
+          </div>
+          <span className="text-lg font-black tracking-tighter text-gradient font-headline">Manju</span>
         </Link>
-        <div className="hidden lg:flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-xl border border-slate-100">
-            <span className="text-[9px] font-black uppercase tracking-widest text-slate-400">当前视角:</span>
-            <span className="text-[9px] font-black uppercase tracking-widest text-primary">{role === 'client' ? '甲方 (Client)' : '乙方 (Creator)'}</span>
-        </div>
       </div>
       
-      <div className="hidden md:flex items-center gap-8">
-        <Link 
-          href="/" 
-          className={`font-medium font-headline tracking-tight transition-colors ${
-            activeTab === 'home' ? 'text-violet-700' : 'text-slate-500 hover:text-violet-600'
-          }`}
-        >
-          首页
-        </Link>
-        <Link 
-          href="/ai-lab" 
-          className={`font-medium font-headline tracking-tight transition-colors ${
-            activeTab === 'tools' ? 'text-violet-700' : 'text-slate-500 hover:text-violet-600'
-          }`}
-        >
-          AI 工具
-        </Link>
-        <Link 
-          href={role === 'client' ? "/creators" : "/market"} 
-          className={`font-medium font-headline tracking-tight transition-colors ${
-            activeTab === 'market' ? 'text-violet-700' : 'text-slate-500 hover:text-violet-600'
-          }`}
-        >
-          {role === 'client' ? '找人制作' : '需求广场'}
-        </Link>
+      {/* Center: Contextual Title */}
+      <div className="flex-1 flex justify-center">
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60 truncate">
+          {activeTab === 'home' ? '大厅' : 
+           activeTab === 'market' ? (role === 'client' ? '匹配' : '广场') :
+           activeTab === 'tools' ? '实验' : 
+           activeTab === 'messages' ? '消息' : '主页'}
+        </span>
       </div>
 
-      <div className="flex items-center gap-4">
+      {/* Right: Quick Actions */}
+      <div className="flex-1 flex justify-end items-center gap-4">
         <button 
           onClick={handleToggle}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-low hover:bg-white text-secondary hover:text-primary transition-all text-[11px] font-black uppercase tracking-widest border border-transparent hover:border-slate-100 shadow-sm md:flex hidden"
+          className="p-2 rounded-full bg-surface-container-low text-primary active:bg-primary active:text-white transition-all shadow-sm"
+          title="切换身份"
         >
-          <RefreshCw size={14} className="animate-spin-slow" />
-          切换身份
+          <RefreshCw size={16} />
         </button>
-        <div className="w-px h-6 bg-slate-200 md:block hidden"></div>
-        <Link href="/inbox" className={`relative p-2 rounded-full transition-all ${activeTab === 'messages' ? 'bg-primary/10 text-primary' : 'text-slate-500 hover:bg-slate-100 hover:text-violet-600'}`}>
-          <span className="material-symbols-outlined">forum</span>
-          <div className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full ring-2 ring-white"></div>
-        </Link>
-        <Link href={role === 'client' ? "/client" : "/creator/dashboard"} className="hidden sm:block">
-          <div className="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-primary-container/20 cursor-pointer hover:ring-2 hover:ring-primary transition-all">
+        <Link href={role === 'client' ? "/client" : "/creator/dashboard"} className="relative active:scale-90 transition-transform">
+          <div className="w-8 h-8 rounded-xl bg-slate-100 overflow-hidden ring-2 ring-white shadow-md">
             <img 
-              alt="User Profile" 
-              src={role === 'client' 
-                ? "/portfolio/avatar.png"
-                : "https://api.dicebear.com/7.x/avataaars/svg?seed=creator"
-              }
+              alt="Profile" 
+              src={role === 'client' ? "/portfolio/avatar.png" : "https://api.dicebear.com/7.x/avataaars/svg?seed=creator"}
               className="w-full h-full object-cover"
             />
           </div>

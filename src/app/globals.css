@@ -55,6 +55,24 @@
 }
 
 @layer base {
+  :root {
+    --header-height: 64px;
+    --tab-bar-height: calc(64px + env(safe-area-inset-bottom));
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    @apply selection:bg-primary/20;
+  }
+
+  html, body {
+    @apply overflow-x-hidden;
+    background-color: var(--color-surface);
+    /* 禁止移动端橡皮筋效果（可选，视体验而定） */
+    overscroll-behavior-y: none;
+    user-select: none; /* 防止长按选中文本，更像 App */
+  }
+
   body {
     @apply bg-background text-on-surface font-body antialiased;
     min-height: 100vh;
@@ -83,6 +101,15 @@
   }
 
   .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* 全局强制隐藏滚动条但保留滚动功能 */
+  *::-webkit-scrollbar {
+    display: none;
+  }
+  * {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
