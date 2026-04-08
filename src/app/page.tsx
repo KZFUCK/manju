@@ -5,7 +5,19 @@ import NavBar from '@/components/ui/NavBar';
 import BottomNav from '@/components/ui/BottomNav';
 import ModernButton from '@/components/ui/ModernButton';
 import AIInsightPanel from '@/components/ui/AIInsightPanel';
-import { Sparkles, ArrowRight, Star, ListFilter, Briefcase, PlusCircle, LayoutDashboard, Search } from 'lucide-react';
+import { 
+  Sparkles, 
+  ArrowRight, 
+  Star, 
+  ListFilter, 
+  Briefcase, 
+  PlusCircle, 
+  LayoutDashboard, 
+  Search,
+  Wand2,
+  Zap,
+  RefreshCw
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRole } from '@/context/RoleContext';
 
@@ -38,7 +50,7 @@ export default function Home() {
             <Search className={`transition-colors duration-500 ${isSearchFocused ? 'text-primary scale-110' : 'text-slate-300'}`} size={20} />
             <input 
               type="text" 
-              placeholder={role === 'client' ? "输入画风、技术栈或工作室名称..." : "寻找协同创作者或参考案例..."} 
+              placeholder={role === 'client' ? "输入画风、技术栈 or 工作室名称..." : "寻找协同创作者 or 参考案例..."} 
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
               className="flex-1 bg-transparent border-none focus:ring-0 px-4 text-sm font-black placeholder:text-slate-300"
@@ -166,6 +178,3 @@ export default function Home() {
     </div>
   );
 }
-
-// Additional Imports
-import { Wand2, Zap, RefreshCw } from 'lucide-react';

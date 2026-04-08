@@ -4,7 +4,19 @@ import React, { useState, useMemo } from 'react';
 import NavBar from '@/components/ui/NavBar';
 import BottomNav from '@/components/ui/BottomNav';
 import ModernButton from '@/components/ui/ModernButton';
-import { Search, Filter, ListFilter, Star as StarIcon, Clock, DollarSign, PlusCircle, ArrowRight, Zap, Target } from 'lucide-react';
+import { 
+  Search, 
+  Filter, 
+  ListFilter, 
+  Star as StarIcon, 
+  Clock, 
+  DollarSign, 
+  PlusCircle, 
+  ArrowRight, 
+  Zap, 
+  Target,
+  Palette
+} from 'lucide-react';
 import Link from 'next/link';
 
 interface Studio {
@@ -190,16 +202,6 @@ export default function Marketplace() {
            <div className="absolute right-[-20%] bottom-[-20%] w-64 h-64 bg-primary/10 rounded-full blur-[60px]"></div>
            <div className="absolute left-[-20%] top-[-20%] w-64 h-64 bg-indigo-500/5 rounded-full blur-[60px]"></div>
         </div>
-      </main>
-
-      <BottomNav activeTab="market" />
-      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent pointer-events-none z-30"></div>
-    </div>
-  );
-}
-top-[-10px] w-32 h-32 bg-primary/10 rounded-full blur-[40px]"></div>
-           <div className="absolute left-[-10px] bottom-[-10px] w-32 h-32 bg-indigo-500/10 rounded-full blur-[40px]"></div>
-        </Link>
       </main>
 
       <BottomNav activeTab="market" />

@@ -14,8 +14,7 @@ import {
   ChevronLeft,
   Sparkles,
   Plus,
-  Loader2,
-  ListFilter
+  Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
