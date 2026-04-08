@@ -22,209 +22,137 @@ import Link from 'next/link';
 
 export default function ClientDashboard() {
   const { showToast } = useToast();
-  const [isAccepting, setIsAccepting] = React.useState(false);
   
-  const handleAcceptance = (e: React.MouseEvent, title: string) => {
-    e.stopPropagation();
-    showToast(`正在发起《${title}》的阶段验收...`, 'info');
-    setTimeout(() => {
-      showToast('验收成功！托管资金已拨付至创作者。', 'success');
-    }, 2000);
-  };
-
   const projects = [
     {
       id: 1,
-      title: '赛博朋克 2077 系列漫剧',
-      status: '进行中',
+      title: '赛博朋克：霓虹之眼',
+      status: '制作中',
       progress: 65,
-      creator: 'NeoGenesis 工作室',
-      deadline: '2026-05-20',
+      creator: 'NeoGenesis Studio',
       budget: '¥ 45,000'
     },
     {
       id: 2,
       title: '古典玄幻：剑意江湖',
-      status: '审核中',
+      status: '待验收',
       progress: 100,
       creator: 'Silk Road AI',
-      deadline: '2026-04-15',
       budget: '¥ 12,000'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface selection:bg-primary/20 safe-pb relative overflow-hidden">
+      {/* Ambience */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+
       <NavBar activeTab="profile" />
 
-      <main className="max-w-7xl mx-auto px-6 pt-10 pb-32">
-        {/* 顶部标题与快速操作 */}
-        <section className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-          <div>
-            <span className="font-['Inter'] text-[11px] font-black tracking-[0.2em] uppercase text-primary mb-2 block">
-              委托方管理后台 / CLIENT DASHBOARD
-            </span>
-            <h1 className="text-4xl font-headline font-black tracking-tight">我的制作与协作</h1>
-          </div>
-          <div className="flex gap-4">
-            <Link href="/creator/dashboard">
-              <ModernButton variant="secondary" size="lg" className="flex items-center gap-2 group">
-                <LayoutDashboard size={20} />
-                切换至创作者后台
-              </ModernButton>
-            </Link>
-            <Link href="/client/post">
-              <ModernButton variant="primary" size="lg" className="flex items-center gap-2 group shadow-xl shadow-primary/20">
-                <Plus size={20} className="group-hover:rotate-90 transition-transform" />
-                发布新需求
-              </ModernButton>
-            </Link>
-          </div>
-        </section>
+      <main className="px-5 pt-8 pb-32 relative z-10">
+        <header className="mb-10 px-1">
+          <h1 className="text-3xl font-headline font-black tracking-tight text-on-surface mb-2">
+            我的约稿中心
+          </h1>
+          <p className="text-[10px] text-secondary font-black uppercase tracking-widest opacity-60 italic">Client Workspace / Control</p>
+        </header>
 
-        {/* 核心数据总览 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {[
-            { label: '正在合作', count: '3', icon: <Clock size={20} />, color: 'bg-primary/5 text-primary' },
-            { label: '待面试/初步意向', count: '5', icon: <Users size={20} />, color: 'bg-amber-50 text-amber-600' },
-            { label: '总投资额', count: '¥ 57.5k', icon: <TrendingUp size={20} />, color: 'bg-indigo-50 text-indigo-600' },
-            { label: '收藏人才', count: '24', icon: <Star size={20} />, color: 'bg-purple-50 text-purple-600', isStar: true },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-white p-7 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`p-4 rounded-2xl ${stat.color}`}>
-                  {stat.isStar ? <Star size={20} fill="currentColor" /> : stat.icon}
-                </div>
+        {/* Quick Stats Grid */}
+        <div className="grid grid-cols-2 gap-3 mb-10">
+           <div className="bg-slate-900 rounded-[2.25rem] p-6 text-white shadow-xl shadow-slate-900/20 relative overflow-hidden group">
+              <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-4 block">正在进行</span>
+              <div className="flex items-baseline gap-1">
+                 <span className="text-3xl font-black font-headline">03</span>
+                 <span className="text-[10px] font-bold text-primary italic">Active</span>
               </div>
-              <p className="text-3xl font-black font-headline text-on-surface mb-1">{stat.count}</p>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
-            </div>
-          ))}
+              <Briefcase className="absolute -right-2 -bottom-2 text-white/5" size={64} />
+           </div>
+           <div className="bg-white rounded-[2.25rem] p-6 border border-slate-50 shadow-sm">
+              <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-4 block">待处理邀约</span>
+              <div className="flex items-baseline gap-1">
+                 <span className="text-3xl font-black font-headline text-on-surface">05</span>
+                 <span className="text-[10px] font-bold text-amber-500 italic">Invitations</span>
+              </div>
+           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
-          {/* 招聘漏斗 / Recruitment Pipeline */}
-          <div className="lg:col-span-8 bg-white rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden flex flex-col">
-            <div className="px-8 py-7 border-b border-slate-50 flex items-center justify-between bg-white">
-            <h2 className="font-headline font-black text-xl tracking-tight">活跃项目流水线</h2>
-              <div className="flex items-center gap-2">
-                 <span className="bg-primary/5 text-primary text-[10px] font-black px-3 py-1 rounded-lg uppercase tracking-widest">Active</span>
-              </div>
-            </div>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-left bg-slate-50/50">
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">项目/需求</th>
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">承制方</th>
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">协作进度</th>
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">委托金额</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-50">
-                  {[
-                    { title: '赛博朋克：霓虹之眼', creator: 'NeoGenesis', stage: '制作中', progress: 65, budget: '¥ 45,000', avatar: '/portfolio/avatar.png' },
-                    { title: '古风：剑意江湖', creator: 'Silk Road', stage: '验收中', progress: 100, budget: '¥ 12,000', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=silk' },
-                    { title: '都市漫剧：暗影觉醒', creator: '阿基米德', stage: '意向达成', progress: 20, budget: '¥ 8,500', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=archi' },
-                  ].map((project, idx) => (
-                    <tr 
-                      key={idx} 
-                      className="hover:bg-slate-50/80 transition-all group cursor-pointer"
-                    >
-                      <td className="px-8 py-6">
-                        <p className="font-bold text-on-surface group-hover:text-primary transition-colors">{project.title}</p>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Order ID: #K{2026 + idx}</p>
-                      </td>
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-3">
-                           <div className="w-8 h-8 rounded-lg overflow-hidden border border-slate-100">
-                              <img src={project.avatar} className="w-full h-full object-cover" alt="" />
-                           </div>
-                           <span className="text-sm font-bold text-secondary">{project.creator}</span>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                            <div className="h-full bg-primary" style={{ width: `${project.progress}%` }}></div>
-                          </div>
-                          <span className={`text-[10px] font-black uppercase tracking-widest ${
-                            project.stage === '验收中' ? 'text-emerald-500' : 'text-primary'
-                          }`}>{project.stage}</span>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6 font-bold text-sm text-on-surface">{project.budget}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+        {/* Active Orders Section */}
+        <section className="mb-12">
+           <div className="flex items-center justify-between mb-6 px-1">
+             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface/40">活跃项目流水线 / PIPELINE</h2>
+             <ListFilter size={16} className="text-slate-300" />
+           </div>
 
-          {/* 人才收藏 / Shortlist */}
-          <div className="lg:col-span-4 space-y-8">
-             <div className="bg-white rounded-[3rem] border border-slate-100 p-8 shadow-sm">
-                <div className="flex items-center justify-between mb-8">
-                   <h3 className="font-headline font-black text-lg tracking-tight">人才库收藏</h3>
-                   <Link href="/creators" className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">浏览全部</Link>
-                </div>
-                <div className="space-y-6">
-                   {[
-                     { name: '未来映画', style: '现代都市', rating: 4.9 },
-                     { name: '莫比乌斯动画', style: '科幻悬疑', rating: 4.8 },
-                     { name: '极客视觉', style: '3D 渲染', rating: 5.0 },
-                   ].map((talent, idx) => (
-                     <div key={idx} className="flex items-center justify-between group">
-                        <div className="flex items-center gap-4">
-                           <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-primary border border-slate-100 group-hover:bg-primary/5 transition-colors">
-                              <Sparkles size={20} />
-                           </div>
-                           <div>
-                              <p className="font-bold text-sm text-on-surface">{talent.name}</p>
-                              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{talent.style}</p>
-                           </div>
-                        </div>
-                        <div className="text-right">
-                           <div className="flex items-center text-amber-500 gap-1 text-[10px] font-black">
-                              <Star size={10} fill="currentColor" /> {talent.rating}
-                           </div>
-                        </div>
-                     </div>
-                   ))}
-                </div>
-                <ModernButton variant="secondary" fullWidth className="mt-10 rounded-2xl border-dashed border-2 hover:border-primary/30">
-                   + 添加更多备注
-                </ModernButton>
-             </div>
-          </div>
-        </div>
+           <div className="space-y-4">
+              {projects.map((project) => (
+                <Link key={project.id} href={`/order/${project.id}`} className="block bg-white rounded-[2.5rem] p-6 border border-slate-50 shadow-sm active:scale-95 transition-all group">
+                   <div className="flex justify-between items-start mb-4">
+                      <div>
+                         <h3 className="text-base font-black text-on-surface tracking-tight mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
+                         <div className="flex items-center gap-2">
+                            <span className="text-[9px] font-bold text-slate-400">{project.creator}</span>
+                            <span className="w-1 h-1 rounded-full bg-slate-200"></span>
+                            <span className={`text-[9px] font-black uppercase tracking-widest ${project.status === '待验收' ? 'text-emerald-500' : 'text-primary'}`}>{project.status}</span>
+                         </div>
+                      </div>
+                      <span className="text-[11px] font-black font-headline text-on-surface/50">{project.budget}</span>
+                   </div>
 
-        {/* 提示 Banner */}
-        <section className="bg-slate-900 rounded-[3rem] p-10 flex flex-col md:flex-row items-center gap-10 shadow-2xl relative overflow-hidden text-white">
-          <div className="relative w-48 h-48 flex-shrink-0 group overflow-hidden rounded-3xl border border-white/10 z-10">
-            <img 
-              src="/portfolio/avatar.png" 
-              alt="AI 推荐" 
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-            />
-          </div>
-          <div className="flex-1 z-10">
-            <h3 className="text-2xl font-headline font-black mb-4 tracking-tight">AI 精准匹配创作者 / MATCH</h3>
-            <p className="text-slate-400 text-base leading-relaxed max-w-2xl mb-8 font-medium">
-              系统分析了您的历史委托倾向，发现 **NeoGenesis** 工作室最近在「玄幻」领域的作品质感有了显著提升，且档期空余，建议在其价格上涨前建立联系。
-            </p>
-            <Link href="/creator/1">
-              <ModernButton variant="glass" size="lg" className="bg-white text-slate-900 border-none px-10">
-                查看创作者主页
-              </ModernButton>
-            </Link>
-          </div>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[100px]"></div>
+                   <div className="space-y-2">
+                      <div className="flex justify-between text-[8px] font-black text-slate-300 uppercase tracking-widest">
+                         <span>进度反馈</span>
+                         <span>{project.progress}%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-slate-50 rounded-full overflow-hidden">
+                         <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${project.progress}%` }}></div>
+                      </div>
+                   </div>
+                </Link>
+              ))}
+           </div>
         </section>
+
+        {/* Studio Shortlist Corner */}
+        <section className="mb-10">
+           <div className="flex items-center justify-between mb-6 px-1">
+             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface/40">人才收藏夹 / SHORTLIST</h2>
+           </div>
+
+           <div className="flex gap-3 overflow-x-auto no-scrollbar -mx-5 px-5">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="flex-shrink-0 w-32 bg-white rounded-3xl p-4 border border-slate-50 shadow-sm flex flex-col items-center text-center group active:scale-95 transition-all">
+                   <div className="w-14 h-14 rounded-2xl bg-slate-50 mb-3 overflow-hidden border border-slate-100 group-hover:border-primary/20 transition-colors">
+                      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=talent${i}`} className="w-full h-full object-cover" alt="" />
+                   </div>
+                   <span className="text-[10px] font-black text-on-surface truncate w-full">未来映画 {i}</span>
+                   <span className="text-[8px] font-bold text-slate-300 uppercase mt-0.5">赛博专业</span>
+                </div>
+              ))}
+              <Link href="/market" className="flex-shrink-0 w-32 h-32 rounded-3xl border-2 border-dashed border-slate-100 flex flex-col items-center justify-center gap-2 active:bg-slate-50 transition-all">
+                 <Plus size={20} className="text-slate-300" />
+                 <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest">发现更多</span>
+              </Link>
+           </div>
+        </section>
+
+        {/* Action Call for Clients */}
+        <Link href="/market" className="block mt-14 bg-primary rounded-[2.75rem] p-8 text-center text-white shadow-2xl shadow-primary/30 active:scale-95 transition-all relative overflow-hidden group">
+           <div className="relative z-10 flex flex-col items-center">
+              <Zap size={32} className="mb-4 text-white fill-white/20 group-hover:translate-y-[-4px] transition-transform" />
+              <h3 className="text-xl font-headline font-black mb-1">寻觅新的创作灵感</h3>
+              <p className="text-white/60 text-[10px] uppercase tracking-widest font-bold">Explore new studios & styles</p>
+           </div>
+           <div className="absolute right-[-10%] bottom-[-10%] w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+        </Link>
       </main>
 
       <BottomNav activeTab="profile" />
+      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent pointer-events-none z-30"></div>
     </div>
+  );
+}
+
+// Ensure imports for the new specific icons
+import { ListFilter } from 'lucide-react';
   );
 }

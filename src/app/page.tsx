@@ -25,9 +25,11 @@ export default function Home() {
         {/* App Welcome Header */}
         <header className="mb-8 px-1">
           <h1 className="text-3xl font-headline font-black tracking-tight text-on-surface mb-1">
-            {role === 'client' ? '匹配艺术家' : '创作中心'}
+            {role === 'client' ? '寻找顶级创作者' : '我的创作控制台'}
           </h1>
-          <p className="text-sm text-secondary font-medium italic opacity-80">MangaAI Protocol v1.2</p>
+          <p className="text-sm text-secondary font-medium italic opacity-80">
+            {role === 'client' ? '发现并对接最适合您剧本的 AI 画师' : '管理您的作品集与商业邀约流水线'}
+          </p>
         </header>
 
         {/* Floating Search Bar */}
@@ -36,7 +38,7 @@ export default function Home() {
             <Search className={`transition-colors duration-500 ${isSearchFocused ? 'text-primary scale-110' : 'text-slate-300'}`} size={20} />
             <input 
               type="text" 
-              placeholder="搜索模型、风格或关键词..." 
+              placeholder={role === 'client' ? "输入画风、技术栈或工作室名称..." : "寻找协同创作者或参考案例..."} 
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
               className="flex-1 bg-transparent border-none focus:ring-0 px-4 text-sm font-black placeholder:text-slate-300"
@@ -44,63 +46,96 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Grid Actions - The Main Lobby Hub */}
+        {/* Grid Actions - Business Corrected */}
         <div className="grid grid-cols-2 gap-4 mb-12">
-          <Link href="/client/post" className="col-span-2 h-44 bg-slate-900 rounded-[3rem] p-8 text-white active:scale-95 transition-all shadow-2xl relative overflow-hidden group">
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center mb-auto shadow-lg shadow-primary/40 group-hover:scale-110 transition-transform">
-                <PlusCircle size={24} />
-              </div>
-              <div>
-                <h3 className="font-headline font-black text-2xl tracking-tight mb-1">发布新需求</h3>
-                <p className="text-slate-400 text-xs font-medium">AI 算法 15min 内锁定工作室</p>
-              </div>
-            </div>
-            {/* Visual Flair */}
-            <div className="absolute right-[-20px] bottom-[-20px] w-48 h-48 bg-primary/20 rounded-full blur-[60px] group-hover:bg-primary/30 transition-colors"></div>
-            <Sparkles className="absolute top-8 right-8 text-white/10 group-hover:rotate-12 transition-transform" size={48} />
-          </Link>
+          {role === 'client' ? (
+            <>
+              <Link href="/market" className="col-span-2 h-44 bg-slate-900 rounded-[3rem] p-8 text-white active:scale-95 transition-all shadow-2xl relative overflow-hidden group">
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center mb-auto shadow-lg shadow-primary/40 group-hover:scale-110 transition-transform">
+                    <Search size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-headline font-black text-2xl tracking-tight mb-1">探索创作者广场</h3>
+                    <p className="text-slate-400 text-xs font-medium">浏览 1200+ 顶尖 AI 漫剧工作室</p>
+                  </div>
+                </div>
+                <div className="absolute right-[-20px] bottom-[-20px] w-48 h-48 bg-primary/20 rounded-full blur-[60px] group-hover:bg-primary/30 transition-colors"></div>
+                <Sparkles className="absolute top-8 right-8 text-white/10 group-hover:rotate-12 transition-transform" size={48} />
+              </Link>
 
-          <Link href="/market" className="h-40 bg-white rounded-[2.5rem] p-6 flex flex-col active:scale-95 transition-all shadow-sm border border-slate-100/50 group">
-            <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-500 flex items-center justify-center mb-auto group-hover:bg-violet-500 group-hover:text-white transition-colors">
-              <Briefcase size={20} />
-            </div>
-            <div>
-              <h4 className="font-black text-lg tracking-tight">需求广场</h4>
-              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-0.5">Explore</p>
-            </div>
-          </Link>
+              <Link href="/client/post" className="h-40 bg-white rounded-[2.5rem] p-6 flex flex-col active:scale-95 transition-all shadow-sm border border-slate-100/50 group">
+                <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-500 flex items-center justify-center mb-auto group-hover:bg-violet-500 group-hover:text-white transition-colors">
+                  <RefreshCw size={20} />
+                </div>
+                <div>
+                  <h4 className="font-black text-lg tracking-tight">AI 智能匹配</h4>
+                  <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-0.5">Matching</p>
+                </div>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/creator/dashboard" className="col-span-2 h-44 bg-slate-900 rounded-[3rem] p-8 text-white active:scale-95 transition-all shadow-2xl relative overflow-hidden group">
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center mb-auto shadow-lg shadow-indigo-500/40 group-hover:scale-110 transition-transform">
+                    <LayoutDashboard size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-headline font-black text-2xl tracking-tight mb-1">流水线工作台</h3>
+                    <p className="text-slate-400 text-xs font-medium">您有 3 项待处理的定向约稿邀约</p>
+                  </div>
+                </div>
+                <div className="absolute right-[-20px] bottom-[-20px] w-48 h-48 bg-indigo-500/20 rounded-full blur-[60px]"></div>
+                <Briefcase className="absolute top-8 right-8 text-white/10" size={48} />
+              </Link>
+
+              <Link href="/creator/portfolio" className="h-40 bg-white rounded-[2.5rem] p-6 flex flex-col active:scale-95 transition-all shadow-sm border border-slate-100/50 group">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mb-auto group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                  <PlusCircle size={20} />
+                </div>
+                <div>
+                  <h4 className="font-black text-lg tracking-tight">上传作品</h4>
+                  <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-0.5">Showcase</p>
+                </div>
+              </Link>
+            </>
+          )}
 
           <Link href="/ai-lab" className="h-40 bg-white rounded-[2.5rem] p-6 flex flex-col active:scale-95 transition-all shadow-sm border border-slate-100/50 group">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mb-auto group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center mb-auto group-hover:bg-emerald-500 group-hover:text-white transition-colors">
               <Wand2 size={20} />
             </div>
             <div>
-              <h4 className="font-black text-lg tracking-tight">实验室</h4>
-              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-0.5">Power</p>
+              <h4 className="font-black text-lg tracking-tight">AI 工具箱</h4>
+              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-0.5">Tools</p>
             </div>
           </Link>
         </div>
 
         {/* Hot Ticker / Mini Insights */}
-        <section className="mb-12">
-          <div className="bg-primary/5 border border-primary/10 rounded-[2rem] p-5 flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary animate-pulse">
-               <Zap size={20} fill="currentColor" />
+        {role === 'client' && (
+          <section className="mb-12">
+            <div className="bg-primary/5 border border-primary/10 rounded-[2rem] p-5 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary animate-pulse">
+                <Zap size={20} fill="currentColor" />
+              </div>
+              <div className="flex-1">
+                <span className="block text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">市场洞察</span>
+                <p className="text-[11px] font-bold text-on-surface/70 leading-tight">“新中式玄幻”风格工作室目前咨询热度最高...</p>
+              </div>
+              <ArrowRight size={16} className="text-primary/40" />
             </div>
-            <div className="flex-1">
-               <span className="block text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">AI 洞察</span>
-               <p className="text-[11px] font-bold text-on-surface/70 leading-tight">当前“科幻赛博”类漫剧需求量上涨 24%...</p>
-            </div>
-            <ArrowRight size={16} className="text-primary/40" />
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* Top Creators / Recent Section as App Cards */}
+        {/* Top Creators Viewport */}
         <section className="pb-8">
            <div className="flex items-center justify-between mb-6 px-1">
-             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface/40">活跃艺术家</h2>
-             <span className="text-[10px] font-black text-primary uppercase">查看全部</span>
+             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface/40">
+               {role === 'client' ? '推荐合作工作室' : '优秀同行案例'}
+             </h2>
+             <span className="text-[10px] font-black text-primary uppercase">更多精彩</span>
            </div>
            
            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 -mx-1 px-1">
@@ -113,10 +148,10 @@ export default function Home() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                     />
                   </div>
-                  <h3 className="font-black text-sm text-on-surface truncate">NeoGenesis</h3>
+                  <h3 className="font-black text-sm text-on-surface truncate">NeoGenesis Studio</h3>
                   <div className="flex items-center gap-1.5 mt-1">
                     <Star size={10} className="text-amber-500 fill-amber-500" />
-                    <span className="text-[10px] font-bold text-slate-400">5.0 (124+)</span>
+                    <span className="text-[10px] font-bold text-slate-400">5.0 (成交 124)</span>
                   </div>
                </Link>
              ))}
@@ -132,5 +167,5 @@ export default function Home() {
   );
 }
 
-// Additional Imports needed for the new UI
-import { Wand2, Zap } from 'lucide-react';
+// Additional Imports
+import { Wand2, Zap, RefreshCw } from 'lucide-react';

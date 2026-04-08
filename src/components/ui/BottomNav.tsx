@@ -36,20 +36,25 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab = 'home' }) => {
           }`}
         >
           <div className={`transition-all duration-300 ${activeTab === 'market' ? 'scale-110' : ''}`}>
-             <span className="material-symbols-outlined !text-[28px]">explore</span>
+             <span className="material-symbols-outlined !text-[28px]">groups</span>
           </div>
-          <span className="text-[10px] font-black uppercase tracking-widest mt-1 opacity-80 scale-90">广场</span>
+          <span className="text-[10px] font-black uppercase tracking-widest mt-1 opacity-80 scale-90">发现</span>
         </Link>
 
-        {/* Central Action Button (Floating Above) */}
+        {/* Central Action Button - Role Aware */}
         <div className="flex-1 flex flex-col items-center justify-center relative">
           <Link 
-            href="/client/post" 
-            className="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white shadow-2xl shadow-primary/40 active:scale-90 transition-all border-4 border-white/20 -mt-2 group"
+            href={role === 'client' ? "/market" : "/creator/portfolio/new"} 
+            className="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white shadow-2xl shadow-primary/40 active:scale-90 transition-all border-4 border-white/20 -mt-2 group relative overflow-hidden"
           >
-             <span className="material-symbols-outlined !text-[32px] group-hover:rotate-90 transition-transform duration-500">add</span>
+             <div className="absolute inset-0 bg-white/20 translate-y-full group-active:translate-y-0 transition-transform"></div>
+             <span className="material-symbols-outlined !text-[32px] relative z-10 transition-transform duration-500 group-hover:rotate-12">
+               {role === 'client' ? 'auto_awesome' : 'add'}
+             </span>
           </Link>
-          <span className="text-[10px] font-black uppercase tracking-widest mt-1 text-primary opacity-80 scale-90">发布</span>
+          <span className="text-[10px] font-black uppercase tracking-widest mt-1 text-primary-fixed-dim opacity-80 scale-90">
+            {role === 'client' ? '寻找画师' : '发布作品'}
+          </span>
         </div>
 
         <Link 

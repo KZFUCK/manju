@@ -20,36 +20,36 @@ const NavBar: React.FC<NavBarProps> = ({ activeTab = 'home' }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 h-16 bg-white/40 dark:bg-slate-950/40 backdrop-blur-xl border-b border-white/20 dark:border-white/5 flex items-center justify-between px-6 w-full">
+    <header className="sticky top-0 z-50 h-[var(--header-height)] bg-white/40 dark:bg-slate-950/40 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 w-full">
       {/* Left: App Logo / Brand */}
       <div className="flex-1 flex items-center">
-        <Link href="/" className="flex items-center gap-2 active:scale-95 transition-transform">
+        <Link href="/" className="flex items-center gap-2 active:scale-90 transition-transform">
           <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white font-black text-[10px] shadow-lg shadow-primary/20">
             M
           </div>
-          <span className="text-base font-black tracking-tighter text-on-surface font-headline">Manju</span>
+          <span className="text-sm font-black tracking-tighter text-on-surface font-headline">Manju</span>
         </Link>
       </div>
       
       {/* Center: Contextual Title */}
       <div className="flex-1 flex justify-center">
-        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-on-surface/40 truncate">
-          {activeTab === 'home' ? 'Lobby' : 
-           activeTab === 'market' ? 'Market' :
-           activeTab === 'tools' ? 'Lab' : 
-           activeTab === 'messages' ? 'Inbox' : 'Vault'}
+        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-on-surface/30 truncate">
+          {activeTab === 'home' ? (role === 'client' ? 'Lobby' : 'Console') : 
+           activeTab === 'market' ? 'Discovery' :
+           activeTab === 'tools' ? 'AILab' : 
+           activeTab === 'profile' ? 'Profile' : 'MangaAI'}
         </span>
       </div>
 
       {/* Right: Quick Actions */}
-      <div className="flex-1 flex justify-end items-center gap-3">
+      <div className="flex-1 flex justify-end items-center gap-2">
         <button 
           onClick={handleToggle}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-slate-800/80 text-primary active:bg-primary active:text-white transition-all shadow-sm border border-slate-100/50 dark:border-white/10 group"
-          title="切换身份"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-slate-800/80 text-primary active:scale-95 active:bg-primary active:text-white transition-all shadow-sm border border-slate-100/50 dark:border-white/10 group"
+          title="切换角色"
         >
-          <RefreshCw size={12} className="group-active:rotate-180 transition-transform duration-500" />
-          <span className="text-[9px] font-black uppercase tracking-widest leading-none">身份</span>
+          <RefreshCw size={11} className="group-active:rotate-180 transition-transform duration-700" />
+          <span className="text-[8px] font-black uppercase tracking-widest leading-none">身份</span>
         </button>
       </div>
     </header>

@@ -18,182 +18,161 @@ import {
   DollarSign,
   GanttChartSquare,
   Sparkles,
-  ArrowUpRight
+  ArrowUpRight,
+  Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CreatorDashboard() {
-  const bids = [
+  const invitations = [
     {
       id: 1,
       projectTitle: '都市异能：暗影觉醒',
-      employer: '次元文化传媒',
-      status: '已投递',
-      bidAmount: '¥ 15,000',
-      appliedAt: '2 小时前',
-      progress: 20
+      client: '次元文化传媒',
+      status: '新邀约',
+      budget: '¥ 15,000',
+      receivedAt: '2 小时前',
+      matchScore: 95
     },
     {
       id: 2,
       projectTitle: '废土余生：铁甲纪元',
-      employer: '未来影视工作室',
+      client: '未来影视工作室',
       status: '洽谈中',
-      bidAmount: '¥ 85,000',
-      appliedAt: '昨天 15:00',
-      progress: 80
+      budget: '¥ 85,000',
+      receivedAt: '昨天 15:00',
+      matchScore: 88
     }
   ];
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="min-h-screen bg-surface selection:bg-primary/20 safe-pb relative overflow-hidden">
+      {/* Background Geeks Flair */}
+      <div className="absolute top-0 left-0 w-full h-[30vh] bg-slate-900 pointer-events-none"></div>
+      <div className="absolute top-[10%] left-[-10%] w-64 h-64 bg-primary/10 rounded-full blur-[80px]"></div>
+
       <NavBar activeTab="profile" />
 
-      <main className="max-w-7xl mx-auto px-6 pt-10 pb-32">
-        {/* 顶部标题与快速操作 */}
-        <section className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-          <div>
-            <span className="font-['Inter'] text-[11px] font-black tracking-[0.2em] uppercase text-primary mb-2 block">
-              承制方管理后台 / CREATOR DASHBOARD
-            </span>
-            <div className="flex items-center gap-4">
-               <h1 className="text-4xl font-headline font-black tracking-tight text-on-surface">创作者工作台</h1>
-               <div className="bg-emerald-500/10 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">
-                  在线接单中
-               </div>
+      <main className="px-5 pt-8 pb-32 relative z-10">
+        <header className="mb-10 px-1 text-white">
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-3xl font-headline font-black tracking-tight">我的工作室工作台</h1>
+            <div className="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border border-emerald-500/30 animate-pulse">
+               在线受邀
             </div>
           </div>
-          <div className="flex gap-4">
-             <Link href="/market">
-                <ModernButton variant="primary" size="lg" className="flex items-center gap-2 group shadow-xl shadow-primary/20">
-                  <GanttChartSquare size={20} />
-                  前往接单广场
-                </ModernButton>
-             </Link>
-          </div>
+          <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest italic opacity-80">Studio Control / Pipeline</p>
+        </header>
+
+        {/* Studio Real-time Stats */}
+        <div className="grid grid-cols-2 gap-3 mb-10">
+           <div className="bg-white rounded-[2.25rem] p-6 shadow-sm border border-slate-50 relative overflow-hidden">
+              <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-4 block">本月预估营收</span>
+              <div className="flex items-baseline gap-1">
+                 <span className="text-2xl font-black font-headline text-on-surface">¥ 24.5k</span>
+                 <span className="text-[8px] font-bold text-emerald-500 italic">+12%</span>
+              </div>
+              <DollarSign className="absolute -right-2 -bottom-2 text-slate-50" size={56} />
+           </div>
+           <div className="bg-white rounded-[2.25rem] p-6 shadow-sm border border-slate-50">
+              <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-4 block">工作室热度</span>
+              <div className="flex items-baseline gap-1">
+                 <span className="text-2xl font-black font-headline text-on-surface">1.2k</span>
+                 <span className="text-[8px] font-bold text-primary italic">+450</span>
+              </div>
+           </div>
+        </div>
+
+        {/* New Invitations Section */}
+        <section className="mb-12">
+           <div className="flex items-center justify-between mb-6 px-1">
+             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface/40">商业约稿邀约 / INVITATIONS</h2>
+             <span className="text-[10px] font-black text-primary uppercase">查看全部</span>
+           </div>
+
+           <div className="space-y-4">
+              {invitations.map((inv) => (
+                <div key={inv.id} className="bg-white rounded-[2.5rem] p-6 border border-slate-50 shadow-sm active:scale-95 transition-all relative overflow-hidden group">
+                   <div className="flex justify-between items-start mb-6">
+                      <div className="flex-1">
+                         <h3 className="text-base font-black text-on-surface tracking-tight mb-1">{inv.projectTitle}</h3>
+                         <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase">{inv.client}</span>
+                            <span className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest ${inv.status === '新邀约' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-slate-100 text-slate-500'}`}>
+                               {inv.status}
+                            </span>
+                         </div>
+                      </div>
+                      <div className="flex flex-col items-end">
+                         <span className="text-sm font-black text-primary font-headline">{inv.budget}</span>
+                         <span className="text-[9px] font-bold text-slate-300 mt-1">{inv.receivedAt}</span>
+                      </div>
+                   </div>
+
+                   <div className="flex items-center justify-between pt-5 border-t border-slate-50/50">
+                      <div className="flex items-center gap-2">
+                         <div className="w-8 h-8 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
+                            <Sparkles size={14} />
+                         </div>
+                         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">匹配度 {inv.matchScore}%</span>
+                      </div>
+                      <div className="flex gap-2">
+                         <ModernButton variant="glass" size="sm" className="rounded-xl px-4 text-[9px] font-black border-slate-100">拒绝</ModernButton>
+                         <ModernButton variant="primary" size="sm" className="rounded-xl px-5 text-[9px] font-black">立即沟通</ModernButton>
+                      </div>
+                   </div>
+                </div>
+              ))}
+           </div>
         </section>
 
-        {/* 核心数据总览 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {[
-            { label: '本月预计收益', count: '¥ 24,500', icon: <DollarSign size={20} />, color: 'bg-emerald-50 text-emerald-600', trend: '+12.5%' },
-            { label: '活跃投标', count: '6', icon: <Briefcase size={20} />, color: 'bg-primary/5 text-primary', trend: '+2' },
-            { label: '作品被浏览', count: '1.2k', icon: <Eye size={20} />, color: 'bg-indigo-50 text-indigo-600', trend: '+450' },
-            { label: '待处理反馈', count: '3', icon: <Clock size={20} />, color: 'bg-amber-50 text-amber-600', trend: '紧急' },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-white p-7 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all group overflow-hidden relative">
-              <div className="absolute -right-4 -top-4 w-20 h-20 bg-slate-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+        {/* Studio Pipeline / Delivery */}
+        <section className="mb-10">
+           <div className="bg-slate-900 rounded-[3rem] p-8 text-white relative overflow-hidden shadow-2xl">
               <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`p-4 rounded-2xl ${stat.color}`}>
-                    {stat.icon}
-                  </div>
-                  <span className={`text-[10px] font-black ${stat.trend.includes('+') ? 'text-emerald-500' : 'text-primary'} uppercase tracking-widest`}>
-                    {stat.trend}
-                  </span>
-                </div>
-                <p className="text-3xl font-black font-headline text-on-surface mb-1">{stat.count}</p>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                 <div className="flex items-center gap-3 mb-6">
+                    <GanttChartSquare size={20} className="text-primary" />
+                    <h3 className="font-headline font-black text-lg">制作流水线</h3>
+                 </div>
+                 <div className="space-y-6">
+                    {[
+                      { name: '赛博朋克：霓虹之眼', progress: 65, color: 'bg-primary' },
+                      { name: '水墨画卷：剑意长歌', progress: 30, color: 'bg-indigo-500' }
+                    ].map(work => (
+                      <div key={work.name} className="space-y-2">
+                         <div className="flex justify-between text-[10px] font-bold text-slate-400">
+                            <span>{work.name}</span>
+                            <span>{work.progress}%</span>
+                         </div>
+                         <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden text-primary">
+                            <div className={`h-full ${work.color} transition-all duration-1000`} style={{ width: `${work.progress}%` }}></div>
+                         </div>
+                      </div>
+                    ))}
+                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+           </div>
+        </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          {/* 投标管理 */}
-          <div className="lg:col-span-2 bg-white rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden flex flex-col">
-            <div className="px-8 py-7 border-b border-slate-50 flex items-center justify-between bg-white">
-              <h2 className="font-headline font-black text-xl tracking-tight">我的最近投标</h2>
-              <button className="text-slate-400 hover:text-primary transition-all p-2 rounded-xl hover:bg-slate-50">
-                <MoreVertical size={20} />
-              </button>
-            </div>
-            
-            <div className="flex-1 overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-left bg-slate-50/50">
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">项目需求</th>
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">状态</th>
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">报价</th>
-                    <th className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">反馈率</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-50">
-                  {bids.map((bid) => (
-                    <tr key={bid.id} className="hover:bg-slate-50/80 transition-all group cursor-pointer">
-                      <td className="px-8 py-6">
-                        <p className="font-bold text-on-surface group-hover:text-primary transition-colors mb-1">{bid.projectTitle}</p>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{bid.employer}</p>
-                      </td>
-                      <td className="px-8 py-6">
-                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                          bid.status === '洽谈中' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-slate-100 text-slate-500'
-                        }`}>
-                          {bid.status}
-                        </span>
-                      </td>
-                      <td className="px-8 py-6 font-['Inter'] font-bold text-sm">{bid.bidAmount}</td>
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-3">
-                           <div className="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                              <div className="h-full bg-primary" style={{ width: `${bid.progress}%` }}></div>
-                           </div>
-                           <ArrowUpRight size={14} className="text-slate-300 group-hover:text-primary transition-colors" />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* 右侧：作品集概览与优化建议 */}
-          <div className="space-y-8">
-             <div className="bg-slate-900 rounded-[3rem] p-8 text-white relative overflow-hidden shadow-2xl">
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-6">
-                     <span className="p-3 bg-white/10 rounded-2xl text-primary-fixed-dim border border-white/10">
-                        <Sparkles size={20} />
-                     </span>
-                     <h3 className="font-headline font-extrabold text-lg">作品集优化建议</h3>
-                  </div>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                    AI 分析显示，您的**赛博朋克风格**近期搜索量激增 240%。建议在作品集中置顶展示《霓虹之眼》的 4K 质量分镜，以获得更多商业定向邀请。
-                  </p>
-                  <ModernButton variant="glass" fullWidth className="bg-white text-slate-900 border-none font-black text-xs h-12">
-                    立即一键同步
-                  </ModernButton>
-                </div>
-                <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-primary/20 rounded-full blur-[60px]"></div>
-             </div>
-
-             <div className="bg-white rounded-[3rem] border border-slate-100 p-8 shadow-sm">
-                <h3 className="font-headline font-black text-base mb-6 tracking-tight">作品集浏览分布 / GEO</h3>
-                <div className="space-y-5">
-                   {[
-                     { area: '上海/杭州', share: 45 },
-                     { area: '东京/大阪', share: 30 },
-                     { area: '首尔', share: 15 },
-                     { area: '其他', share: 10 },
-                   ].map(geo => (
-                     <div key={geo.area}>
-                        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
-                           <span>{geo.area}</span>
-                           <span className="text-on-surface font-['Inter']">{geo.share}%</span>
-                        </div>
-                        <div className="w-full h-1 bg-slate-50 rounded-full overflow-hidden">
-                           <div className="h-full bg-primary/40" style={{ width: `${geo.share}%` }}></div>
-                        </div>
-                     </div>
-                   ))}
-                </div>
-             </div>
-          </div>
-        </div>
+        {/* Quick Portfolio Sync */}
+        <section className="mt-8 bg-white/50 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/40 shadow-sm border-dashed">
+           <div className="flex flex-col items-center text-center">
+              <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-4">
+                 <LayoutDashboard size={24} />
+              </div>
+              <h3 className="text-base font-black text-on-surface mb-1">更新工作室名片</h3>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-6">Keep your portfolio fresh</p>
+              <ModernButton variant="secondary" className="w-full rounded-2xl border-slate-100 shadow-sm font-black text-[10px] tracking-widest py-4">
+                 进入作品管理
+              </ModernButton>
+           </div>
+        </section>
       </main>
 
       <BottomNav activeTab="profile" />
+      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent pointer-events-none z-30"></div>
     </div>
+  );
+}
   );
 }
