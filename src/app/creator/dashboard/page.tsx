@@ -5,21 +5,10 @@ import NavBar from '@/components/ui/NavBar';
 import BottomNav from '@/components/ui/BottomNav';
 import ModernButton from '@/components/ui/ModernButton';
 import { 
-  Plus, 
-  Briefcase, 
-  Clock, 
-  CheckCircle2, 
-  MoreVertical, 
-  ChevronRight,
-  TrendingUp,
-  LayoutDashboard,
-  Users,
-  Eye,
-  DollarSign,
-  GanttChartSquare,
+  DollarSign, 
   Sparkles,
-  ArrowUpRight,
-  Loader2
+  LayoutDashboard,
+  BarChart
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -131,7 +120,7 @@ export default function CreatorDashboard() {
            <div className="bg-slate-900 rounded-[3rem] p-8 text-white relative overflow-hidden shadow-2xl">
               <div className="relative z-10">
                  <div className="flex items-center gap-3 mb-6">
-                    <GanttChartSquare size={20} className="text-primary" />
+                    <BarChart size={20} className="text-primary" />
                     <h3 className="font-headline font-black text-lg">制作流水线</h3>
                  </div>
                  <div className="space-y-6">

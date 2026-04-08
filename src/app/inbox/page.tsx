@@ -5,15 +5,9 @@ import NavBar from '@/components/ui/NavBar';
 import BottomNav from '@/components/ui/BottomNav';
 import ModernButton from '@/components/ui/ModernButton';
 import { 
-  Search, 
   Send, 
   Paperclip, 
-  Smile, 
   MoreVertical, 
-  Circle,
-  FileText,
-  Clock,
-  CheckCheck,
   ArrowLeft,
   Sparkles
 } from 'lucide-react';

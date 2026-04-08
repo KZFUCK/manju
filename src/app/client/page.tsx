@@ -7,15 +7,6 @@ import ModernButton from '@/components/ui/ModernButton';
 import { 
   Plus, 
   Briefcase, 
-  Clock, 
-  CheckCircle2, 
-  MoreVertical, 
-  ChevronRight,
-  TrendingUp,
-  LayoutDashboard,
-  Users,
-  Star,
-  Sparkles,
   Zap,
   ListFilter
 } from 'lucide-react';

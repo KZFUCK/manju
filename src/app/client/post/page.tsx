@@ -7,13 +7,9 @@ import ModernButton from '@/components/ui/ModernButton';
 import { 
   FileText, 
   Clapperboard, 
-  DollarSign, 
   Calendar, 
-  CheckCircle2, 
-  Info,
   ChevronLeft,
   Sparkles,
-  Plus,
   Loader2
 } from 'lucide-react';
 import Link from 'next/link';
@@ -21,8 +17,9 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/context/ToastContext';
 
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function PostRequirement() {
+function PostRequirementContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const targetStudio = searchParams.get('target');
@@ -115,7 +112,7 @@ export default function PostRequirement() {
                   rows={4} 
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
-                  placeholder="在此输入您的分镜要求、画风倾向或交付标准..." 
+                  placeholder="在此输入您的分镜要求、画风倾向 or 交付标准..." 
                   className="w-full bg-slate-50 border-none rounded-2xl px-5 py-4.5 text-sm font-black focus:ring-4 focus:ring-primary/5 transition-all outline-none resize-none leading-relaxed"
                 ></textarea>
               </div>
@@ -217,5 +214,17 @@ export default function PostRequirement() {
       {/* Fade out mask for lists */}
       <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent pointer-events-none z-30"></div>
     </div>
+  );
+}
+
+export default function PostRequirement() {
+  return (
+    <Suspense fallback={
+      <div className="h-screen bg-surface flex items-center justify-center">
+        <Loader2 className="animate-spin text-primary" size={40} />
+      </div>
+    }>
+      <PostRequirementContent />
+    </Suspense>
   );
 }

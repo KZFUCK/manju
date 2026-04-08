@@ -5,16 +5,10 @@ import NavBar from '@/components/ui/NavBar';
 import BottomNav from '@/components/ui/BottomNav';
 import ModernButton from '@/components/ui/ModernButton';
 import { 
-  Search, 
-  Filter, 
-  ListFilter, 
+  Search,
   Star as StarIcon, 
-  Clock, 
-  DollarSign, 
-  PlusCircle, 
   ArrowRight, 
   Zap, 
-  Target,
   Palette
 } from 'lucide-react';
 import Link from 'next/link';

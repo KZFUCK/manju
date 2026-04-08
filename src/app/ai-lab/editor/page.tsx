@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
   ArrowLeft, 
-  Download, 
   MousePointer2, 
   Brush, 
   Eraser, 

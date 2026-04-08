@@ -4,12 +4,10 @@ import React from 'react';
 import NavBar from '@/components/ui/NavBar';
 import BottomNav from '@/components/ui/BottomNav';
 import ModernButton from '@/components/ui/ModernButton';
-import AIInsightPanel from '@/components/ui/AIInsightPanel';
 import { 
   Sparkles, 
   ArrowRight, 
   Star, 
-  ListFilter, 
   Briefcase, 
   PlusCircle, 
   LayoutDashboard, 

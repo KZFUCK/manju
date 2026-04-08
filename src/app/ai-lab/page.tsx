@@ -10,11 +10,8 @@ import {
   FileJson, 
   Palette, 
   Zap,
-  ArrowRight,
   Cpu,
-  Loader2,
-  CheckCircle2,
-  X
+  Loader2
 } from 'lucide-react';
 import { useToast } from '@/context/ToastContext';
 

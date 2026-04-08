@@ -4,20 +4,12 @@ import React from 'react';
 import NavBar from '@/components/ui/NavBar';
 import BottomNav from '@/components/ui/BottomNav';
 import ModernButton from '@/components/ui/ModernButton';
-import BentoCard from '@/components/ui/BentoCard';
 import { 
   Star, 
-  MapPin, 
-  Briefcase, 
-  Users, 
-  ShieldCheck, 
-  ArrowRight, 
   MessageSquare, 
   PlayCircle,
-  ImageIcon,
   Zap,
-  CheckCircle2,
-  Sparkles
+  CheckCircle2
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRole } from '@/context/RoleContext';
