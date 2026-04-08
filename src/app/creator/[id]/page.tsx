@@ -20,6 +20,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRole } from '@/context/RoleContext';
 
 export default function CreatorProfile() {
   const { role } = useRole();
@@ -166,10 +167,5 @@ export default function CreatorProfile() {
 
       <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent pointer-events-none z-30"></div>
     </div>
-  );
-}
-
-// Ensure useRole is imported
-import { useRole } from '@/context/RoleContext';
   );
 }

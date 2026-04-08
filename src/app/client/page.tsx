@@ -15,7 +15,9 @@ import {
   LayoutDashboard,
   Users,
   Star,
-  Sparkles
+  Sparkles,
+  Zap,
+  ListFilter
 } from 'lucide-react';
 import { useToast } from '@/context/ToastContext';
 import Link from 'next/link';
@@ -152,7 +154,3 @@ export default function ClientDashboard() {
   );
 }
 
-// Ensure imports for the new specific icons
-import { ListFilter } from 'lucide-react';
-  );
-}
