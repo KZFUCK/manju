@@ -20,45 +20,37 @@ const NavBar: React.FC<NavBarProps> = ({ activeTab = 'home' }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 h-[var(--header-height)] bg-white/80 dark:bg-slate-950/80 backdrop-blur-2xl border-b border-slate-100 dark:border-white/5 flex items-center justify-between px-5 w-full">
+    <header className="sticky top-0 z-50 h-16 bg-white/40 dark:bg-slate-950/40 backdrop-blur-xl border-b border-white/20 dark:border-white/5 flex items-center justify-between px-6 w-full">
       {/* Left: App Logo / Brand */}
       <div className="flex-1 flex items-center">
-        <Link href="/" className="flex items-center gap-1.5 active:scale-95 transition-transform">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-black text-xs shadow-lg shadow-primary/20">
+        <Link href="/" className="flex items-center gap-2 active:scale-95 transition-transform">
+          <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white font-black text-[10px] shadow-lg shadow-primary/20">
             M
           </div>
-          <span className="text-lg font-black tracking-tighter text-gradient font-headline">Manju</span>
+          <span className="text-base font-black tracking-tighter text-on-surface font-headline">Manju</span>
         </Link>
       </div>
       
       {/* Center: Contextual Title */}
       <div className="flex-1 flex justify-center">
-        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60 truncate">
-          {activeTab === 'home' ? '大厅' : 
-           activeTab === 'market' ? (role === 'client' ? '匹配' : '广场') :
-           activeTab === 'tools' ? '实验' : 
-           activeTab === 'messages' ? '消息' : '主页'}
+        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-on-surface/40 truncate">
+          {activeTab === 'home' ? 'Lobby' : 
+           activeTab === 'market' ? 'Market' :
+           activeTab === 'tools' ? 'Lab' : 
+           activeTab === 'messages' ? 'Inbox' : 'Vault'}
         </span>
       </div>
 
       {/* Right: Quick Actions */}
-      <div className="flex-1 flex justify-end items-center gap-4">
+      <div className="flex-1 flex justify-end items-center gap-3">
         <button 
           onClick={handleToggle}
-          className="p-2 rounded-full bg-surface-container-low text-primary active:bg-primary active:text-white transition-all shadow-sm"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-slate-800/80 text-primary active:bg-primary active:text-white transition-all shadow-sm border border-slate-100/50 dark:border-white/10 group"
           title="切换身份"
         >
-          <RefreshCw size={16} />
+          <RefreshCw size={12} className="group-active:rotate-180 transition-transform duration-500" />
+          <span className="text-[9px] font-black uppercase tracking-widest leading-none">身份</span>
         </button>
-        <Link href={role === 'client' ? "/client" : "/creator/dashboard"} className="relative active:scale-90 transition-transform">
-          <div className="w-8 h-8 rounded-xl bg-slate-100 overflow-hidden ring-2 ring-white shadow-md">
-            <img 
-              alt="Profile" 
-              src={role === 'client' ? "/portfolio/avatar.png" : "https://api.dicebear.com/7.x/avataaars/svg?seed=creator"}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </Link>
       </div>
     </header>
   );

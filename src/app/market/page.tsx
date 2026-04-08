@@ -70,39 +70,42 @@ export default function Marketplace() {
   }, [searchQuery, activeCategory]);
 
   return (
-    <div className="min-h-screen bg-surface safe-pb">
+    <div className="min-h-screen bg-surface relative overflow-hidden">
+      {/* Background Ambience */}
+      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
+
       <NavBar activeTab="market" />
 
-      <main className="px-5 pt-8 pb-32">
+      <main className="px-5 pt-8 pb-32 relative z-10">
         <header className="mb-8 px-1">
           <h1 className="text-3xl font-headline font-black tracking-tight text-on-surface mb-2">
             需求广场
           </h1>
-          <p className="text-sm text-secondary font-medium">浏览当前活跃的 AI 创作协作机会</p>
+          <p className="text-xs text-secondary font-medium uppercase tracking-widest opacity-60">Opportunities Feed</p>
         </header>
 
-        {/* Search & Categories */}
+        {/* App Style Search & Tabs */}
         <div className="space-y-6 mb-8">
           <div className="relative group">
-            <div className={`flex items-center bg-white rounded-2xl border border-slate-100 px-5 py-4 shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary/10`}>
-              <Search className="text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
+            <div className={`flex items-center bg-white/70 backdrop-blur-md rounded-2xl border border-slate-100 px-5 py-3.5 shadow-sm transition-all focus-within:ring-4 focus-within:ring-primary/5 focus-within:border-primary/20`}>
+              <Search className="text-slate-300 group-focus-within:text-primary transition-colors" size={18} />
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="搜索风格或技术要求..." 
-                className="flex-1 bg-transparent border-none focus:ring-0 px-3 text-sm font-bold placeholder:text-slate-300"
+                placeholder="搜索风格、预算或技术要求..." 
+                className="flex-1 bg-transparent border-none focus:ring-0 px-3 text-sm font-black placeholder:text-slate-200"
               />
             </div>
           </div>
 
-          <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 -mx-5 px-5">
              {categories.map((cat) => (
                 <button 
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
-                    activeCategory === cat ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-white text-slate-400 border border-slate-100 shadow-sm'
+                  className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap border ${
+                    activeCategory === cat ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-105' : 'bg-white text-slate-400 border-slate-100 shadow-sm'
                   }`}
                 >
                   {cat}
@@ -111,42 +114,45 @@ export default function Marketplace() {
           </div>
         </div>
 
-        {/* Project Feed */}
+        {/* Compact App Cards Feed */}
         <div className="space-y-4">
           {filteredProjects.map((project) => (
-            <Link key={project.id} href={`/market/${project.id}/bid`} className="block bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm active:scale-[0.98] transition-all relative overflow-hidden group">
-              <div className="flex justify-between items-start mb-4">
+            <Link key={project.id} href={`/market/${project.id}/bid`} className="block bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm active:scale-95 transition-all relative overflow-hidden group">
+              <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 bg-primary/5 text-primary text-[9px] font-black uppercase tracking-wider rounded-lg border border-primary/10">
+                  <span className="px-2 py-0.5 bg-primary/5 text-primary text-[8px] font-black uppercase tracking-widest rounded-md border border-primary/10">
                     {project.category}
                   </span>
                   {project.urgent && (
-                    <span className="px-2.5 py-1 bg-red-50 text-red-500 text-[9px] font-black uppercase tracking-wider rounded-lg border border-red-100 flex items-center gap-1">
+                    <span className="px-2 py-0.5 bg-rose-50 text-rose-500 text-[8px] font-black uppercase tracking-widest rounded-md border border-rose-100 flex items-center gap-1">
                       <Zap size={10} fill="currentColor" /> 加急
                     </span>
                   )}
                 </div>
-                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest flex items-center gap-1">
+                <div className="flex items-center gap-1 text-[9px] font-bold text-slate-300 uppercase tracking-widest">
                    <Clock size={12} /> {project.time}
-                </span>
+                </div>
               </div>
 
-              <h3 className="text-xl font-headline font-black text-on-surface mb-2 tracking-tight group-hover:text-primary transition-colors">
+              <h3 className="text-lg font-headline font-black text-on-surface mb-2 tracking-tight leading-tight group-hover:text-primary transition-colors">
                 {project.title}
               </h3>
               
-              <p className="text-xs text-secondary leading-relaxed line-clamp-2 mb-6 font-medium">
+              <p className="text-[11px] text-secondary leading-normal line-clamp-2 mb-6 font-medium">
                 {project.desc}
               </p>
 
-              <div className="flex items-center justify-between pt-6 border-t border-slate-50">
+              <div className="flex items-center justify-between pt-5 border-t border-slate-50/50">
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">预算估值</span>
-                  <span className="text-lg font-black text-primary font-headline tracking-tighter">
-                    ¥{project.budgetMin.toLocaleString()} - {project.budgetMax.toLocaleString()}
-                  </span>
+                  <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-0.5">EST. BUDGET</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm font-bold text-primary">¥</span>
+                    <span className="text-xl font-black text-primary font-headline tracking-tighter">
+                      {project.budgetMin.toLocaleString()} - {project.budgetMax.toLocaleString()}
+                    </span>
+                  </div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20 -rotate-45 group-hover:rotate-0 transition-transform">
+                <div className="w-10 h-10 rounded-2xl bg-slate-50 text-slate-300 flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/20 transition-all">
                    <ArrowRight size={18} />
                 </div>
               </div>
@@ -154,24 +160,27 @@ export default function Marketplace() {
           ))}
         </div>
 
-        {/* Feature Suggestion Card */}
-        <Link href="/client/post" className="block mt-10 bg-slate-900 rounded-[2.5rem] p-8 relative overflow-hidden group shadow-xl">
-           <div className="relative z-10 text-center">
-              <Target size={32} className="text-primary mx-auto mb-4" />
-              <h3 className="text-white text-xl font-headline font-black mb-2">未找到匹配需求？</h3>
-              <p className="text-slate-400 text-xs leading-relaxed max-w-[220px] mx-auto mb-6">
+        {/* Suggestion Tooltip */}
+        <Link href="/client/post" className="block mt-12 bg-slate-900 rounded-[2.75rem] p-8 relative overflow-hidden group shadow-2xl">
+           <div className="relative z-10 text-center flex flex-col items-center">
+              <div className="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center text-primary mb-4 rotate-12 group-hover:rotate-0 transition-transform">
+                <Target size={24} />
+              </div>
+              <h3 className="text-white text-lg font-headline font-black mb-1">未找到匹配需求？</h3>
+              <p className="text-slate-400 text-[10px] leading-relaxed max-w-[180px] mb-6">
                 主动发布您的创作服务，让甲方通过 AI 定向精准约稿。
               </p>
-              <ModernButton variant="glass" size="md" className="w-full bg-white text-slate-900 border-none">
+              <ModernButton variant="glass" size="sm" className="w-full bg-white text-slate-900 border-none rounded-2xl">
                 立即创建约稿帖
               </ModernButton>
            </div>
-           <div className="absolute right-[-20px] top-[-20px] w-48 h-48 bg-primary/20 rounded-full blur-[50px]"></div>
-           <div className="absolute left-[-20px] bottom-[-20px] w-48 h-48 bg-indigo-500/10 rounded-full blur-[50px]"></div>
+           <div className="absolute right-[-10px] top-[-10px] w-32 h-32 bg-primary/10 rounded-full blur-[40px]"></div>
+           <div className="absolute left-[-10px] bottom-[-10px] w-32 h-32 bg-indigo-500/10 rounded-full blur-[40px]"></div>
         </Link>
       </main>
 
       <BottomNav activeTab="market" />
+      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent pointer-events-none z-30"></div>
     </div>
   );
 }

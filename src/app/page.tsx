@@ -10,123 +10,127 @@ import Link from 'next/link';
 import { useRole } from '@/context/RoleContext';
 
 export default function Home() {
-  const { role, setRole } = useRole();
+  const { role } = useRole();
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
 
   return (
-    <div className="min-h-screen bg-surface selection:bg-primary/20 safe-pb">
+    <div className="min-h-screen bg-surface selection:bg-primary/20 safe-pb relative overflow-hidden">
+      {/* Immersive Background Elements */}
+      <div className="absolute top-[-10%] left-[-20%] w-[120%] h-[40%] bg-gradient-to-br from-primary/10 to-transparent blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[10%] right-[-10%] w-[80%] h-[30%] bg-gradient-to-tl from-indigo-500/5 to-transparent blur-[100px] pointer-events-none"></div>
+
       <NavBar activeTab="home" />
 
-      {/* App Lobby Search Section */}
-      <section className="px-5 pt-8 pb-4">
-        <div className={`relative transition-all duration-300 ${isSearchFocused ? 'scale-[1.02]' : ''}`}>
-          <div className={`flex items-center bg-white rounded-3xl border border-slate-100 px-5 py-4 shadow-sm transition-all ${isSearchFocused ? 'ring-2 ring-primary border-transparent shadow-xl shadow-primary/5' : ''}`}>
-            <Search className={`transition-colors ${isSearchFocused ? 'text-primary' : 'text-slate-400'}`} size={20} />
+      <main className="px-5 pt-4 relative z-10">
+        {/* App Welcome Header */}
+        <header className="mb-8 px-1">
+          <h1 className="text-3xl font-headline font-black tracking-tight text-on-surface mb-1">
+            {role === 'client' ? '匹配艺术家' : '创作中心'}
+          </h1>
+          <p className="text-sm text-secondary font-medium italic opacity-80">MangaAI Protocol v1.2</p>
+        </header>
+
+        {/* Floating Search Bar */}
+        <div className={`mb-10 relative transition-all duration-500 group ${isSearchFocused ? 'translate-y-[-4px]' : ''}`}>
+          <div className={`flex items-center bg-white/70 backdrop-blur-xl rounded-[2rem] border border-white/40 px-6 py-4.5 shadow-sm transition-all ${isSearchFocused ? 'ring-4 ring-primary/5 border-primary/20 shadow-2xl shadow-primary/10' : 'hover:border-primary/10'}`}>
+            <Search className={`transition-colors duration-500 ${isSearchFocused ? 'text-primary scale-110' : 'text-slate-300'}`} size={20} />
             <input 
               type="text" 
-              placeholder="寻找模型、剧本或分镜师..." 
+              placeholder="搜索模型、风格或关键词..." 
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
-              className="flex-1 bg-transparent border-none focus:ring-0 px-4 text-sm font-bold placeholder:text-slate-300"
+              className="flex-1 bg-transparent border-none focus:ring-0 px-4 text-sm font-black placeholder:text-slate-300"
             />
           </div>
         </div>
-      </section>
 
-      <main className="px-5 pb-12">
-        {/* Quick Actions Grid - The "Lobby" feels */}
-        <div className="grid grid-cols-2 gap-4 mb-10">
-          <Link href="/client/post" className="bg-primary rounded-[2.5rem] p-6 text-white active:scale-95 transition-transform shadow-xl shadow-primary/20 relative overflow-hidden group">
-            <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl group-active:scale-150 transition-transform"></div>
-            <PlusCircle size={28} className="mb-4" />
-            <h3 className="font-headline font-black text-xl leading-tight">发布<br />新项目</h3>
+        {/* Grid Actions - The Main Lobby Hub */}
+        <div className="grid grid-cols-2 gap-4 mb-12">
+          <Link href="/client/post" className="col-span-2 h-44 bg-slate-900 rounded-[3rem] p-8 text-white active:scale-95 transition-all shadow-2xl relative overflow-hidden group">
+            <div className="relative z-10 flex flex-col h-full">
+              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center mb-auto shadow-lg shadow-primary/40 group-hover:scale-110 transition-transform">
+                <PlusCircle size={24} />
+              </div>
+              <div>
+                <h3 className="font-headline font-black text-2xl tracking-tight mb-1">发布新需求</h3>
+                <p className="text-slate-400 text-xs font-medium">AI 算法 15min 内锁定工作室</p>
+              </div>
+            </div>
+            {/* Visual Flair */}
+            <div className="absolute right-[-20px] bottom-[-20px] w-48 h-48 bg-primary/20 rounded-full blur-[60px] group-hover:bg-primary/30 transition-colors"></div>
+            <Sparkles className="absolute top-8 right-8 text-white/10 group-hover:rotate-12 transition-transform" size={48} />
           </Link>
-          <div className="grid grid-rows-2 gap-4">
-             <Link href="/market" className="bg-surface-container-low rounded-[2rem] p-5 flex flex-col justify-between active:scale-95 transition-transform border border-slate-100">
-                <div className="flex justify-between items-start">
-                  <Briefcase size={20} className="text-primary" />
-                  <span className="text-[10px] font-black tracking-widest text-primary/40 uppercase">Market</span>
-                </div>
-                <h4 className="font-black text-sm">发现需求</h4>
-             </Link>
-             <Link href="/ai-lab" className="bg-surface-container-low rounded-[2rem] p-5 flex flex-col justify-between active:scale-95 transition-transform border border-slate-100">
-                <div className="flex justify-between items-start">
-                  <Sparkles size={20} className="text-primary" />
-                  <span className="text-[10px] font-black tracking-widest text-primary/40 uppercase">Lab</span>
-                </div>
-                <h4 className="font-black text-sm">AI 实验室</h4>
-             </Link>
-          </div>
+
+          <Link href="/market" className="h-40 bg-white rounded-[2.5rem] p-6 flex flex-col active:scale-95 transition-all shadow-sm border border-slate-100/50 group">
+            <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-500 flex items-center justify-center mb-auto group-hover:bg-violet-500 group-hover:text-white transition-colors">
+              <Briefcase size={20} />
+            </div>
+            <div>
+              <h4 className="font-black text-lg tracking-tight">需求广场</h4>
+              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-0.5">Explore</p>
+            </div>
+          </Link>
+
+          <Link href="/ai-lab" className="h-40 bg-white rounded-[2.5rem] p-6 flex flex-col active:scale-95 transition-all shadow-sm border border-slate-100/50 group">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mb-auto group-hover:bg-amber-500 group-hover:text-white transition-colors">
+              <Wand2 size={20} />
+            </div>
+            <div>
+              <h4 className="font-black text-lg tracking-tight">实验室</h4>
+              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-0.5">Power</p>
+            </div>
+          </Link>
         </div>
 
-        {/* Categories Bar */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-6 py-2">
-          {['全部', 'AI漫剧', 'LoRA模型', '剧本拆解', '商业片'].map((tag, i) => (
-            <button key={tag} className={`px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${i === 0 ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-white text-slate-400 border border-slate-100'}`}>
-              {tag}
-            </button>
-          ))}
-        </div>
-
-        {/* Dynamic Feed */}
-        <section>
-          <div className="flex items-center justify-between mb-6 px-1">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/40">
-              {role === 'client' ? '推荐工作室' : '待处理项目'}
-            </h2>
-            <ArrowRight size={14} className="text-slate-300" />
-          </div>
-
-          <div className="space-y-4">
-             {[1, 2, 3].map(i => (
-               <Link key={i} href="/creator/1" className="block bg-white rounded-[2.5rem] p-5 border border-slate-100 shadow-sm active:scale-[0.98] transition-transform relative overflow-hidden group">
-                  <div className="flex gap-4 items-center relative z-10">
-                    <div className="w-16 h-16 rounded-[1.25rem] overflow-hidden bg-slate-50 flex-shrink-0">
-                      <img 
-                        src={i % 2 === 0 ? "/portfolio/cyberpunk.png" : "/portfolio/wuxia.png"} 
-                        alt="" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-headline font-black text-lg truncate mb-0.5">
-                        {i === 1 ? 'NeoGenesis AI Studio' : 'Silk Road 丝路漫剧'}
-                      </h3>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Star size={12} className="text-amber-500 fill-amber-500" />
-                        <span className="text-[10px] font-bold text-on-surface/60">5.0 (120+ 评价)</span>
-                      </div>
-                      <div className="flex gap-1">
-                        <span className="text-[8px] font-black px-2 py-0.5 bg-slate-100 rounded-md text-slate-400 uppercase">AIGC</span>
-                        <span className="text-[8px] font-black px-2 py-0.5 bg-slate-100 rounded-md text-slate-400 uppercase">4K MAX</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute top-1/2 -translate-y-1/2 right-6 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-20">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
-                       <ArrowRight size={16} />
-                    </div>
-                  </div>
-               </Link>
-             ))}
+        {/* Hot Ticker / Mini Insights */}
+        <section className="mb-12">
+          <div className="bg-primary/5 border border-primary/10 rounded-[2rem] p-5 flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary animate-pulse">
+               <Zap size={20} fill="currentColor" />
+            </div>
+            <div className="flex-1">
+               <span className="block text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">AI 洞察</span>
+               <p className="text-[11px] font-bold text-on-surface/70 leading-tight">当前“科幻赛博”类漫剧需求量上涨 24%...</p>
+            </div>
+            <ArrowRight size={16} className="text-primary/40" />
           </div>
         </section>
 
-        {/* Secondary Banner */}
-        <Link href="/ai-lab" className="mt-8 block bg-slate-900 rounded-[2.5rem] p-8 relative overflow-hidden group shadow-2xl">
-           <div className="relative z-10">
-              <span className="text-primary text-[10px] font-black uppercase tracking-widest mb-2 block">Premium Lab</span>
-              <h3 className="text-white text-xl font-headline font-black mb-2">私有化模型训练</h3>
-              <p className="text-slate-400 text-xs leading-relaxed max-w-[200px]">
-                上传 30 张图，一键训练专属 LoRA，打造风格化漫剧 IP。
-              </p>
+        {/* Top Creators / Recent Section as App Cards */}
+        <section className="pb-8">
+           <div className="flex items-center justify-between mb-6 px-1">
+             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface/40">活跃艺术家</h2>
+             <span className="text-[10px] font-black text-primary uppercase">查看全部</span>
            </div>
-           <div className="absolute right-[-20px] top-[-20px] w-40 h-40 bg-primary/20 rounded-full blur-[40px]"></div>
-           <Sparkles size={64} className="absolute right-6 bottom-6 text-white/5 group-hover:scale-110 transition-transform duration-700" />
-        </Link>
+           
+           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 -mx-1 px-1">
+             {[1, 2, 3].map(i => (
+               <Link key={i} href="/creator/1" className="flex-shrink-0 w-44 bg-white rounded-[2.5rem] p-5 border border-slate-100 shadow-sm active:scale-95 transition-all relative overflow-hidden group">
+                  <div className="w-full aspect-square rounded-[1.75rem] overflow-hidden bg-slate-50 mb-4">
+                    <img 
+                      src={i % 2 === 0 ? "/portfolio/avatar.png" : "https://api.dicebear.com/7.x/avataaars/svg?seed=silk"} 
+                      alt="" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                    />
+                  </div>
+                  <h3 className="font-black text-sm text-on-surface truncate">NeoGenesis</h3>
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <Star size={10} className="text-amber-500 fill-amber-500" />
+                    <span className="text-[10px] font-bold text-slate-400">5.0 (124+)</span>
+                  </div>
+               </Link>
+             ))}
+           </div>
+        </section>
       </main>
 
       <BottomNav activeTab="home" />
+
+      {/* App Tab Bar Safety Gradient */}
+      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent pointer-events-none z-30"></div>
     </div>
   );
 }
+
+// Additional Imports needed for the new UI
+import { Wand2, Zap } from 'lucide-react';
